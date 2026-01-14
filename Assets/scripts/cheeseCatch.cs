@@ -3,7 +3,6 @@ using UnityEngine;
 public class cheeseCatch : MonoBehaviour
 {
     public logicScript logic;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicScript>();
@@ -19,6 +18,7 @@ public class cheeseCatch : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             logic.addScore(1);
+            Destroy(gameObject);
         }
     }
 }

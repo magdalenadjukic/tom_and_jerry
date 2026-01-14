@@ -3,17 +3,19 @@ using UnityEngine;
 public class trapSpawnScript : MonoBehaviour
 {
     public GameObject trap;
-    public float spawnRate = 2;
+    public float spawnRate;
     private float timer = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //public float startDelay = 3f;
     void Start()
     {
         spawnTrap();
+        spawnRate = Random.Range(1.5f, 3f);
+       // timer = -startDelay;
     }
 
-    // Update is called once per frame
     void Update()
     {
+
         if (timer < spawnRate)
         {
             timer += Time.deltaTime;
@@ -24,7 +26,17 @@ public class trapSpawnScript : MonoBehaviour
             timer = 0;
 
         }
-        
+
+        //timer += Time.deltaTime;
+
+     
+        //if (timer >= spawnRate)
+        //{
+        //    spawnTrap();       
+        //    timer = 0f;        
+
+        //}
+
     }
 
     void spawnTrap()
