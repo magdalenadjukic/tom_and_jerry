@@ -830,6 +830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d8d7aad505b5a4ba625127d7680bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  speed: 7
   myRigidBody: {fileID: 1274469618}
   jumpStrength: 10
   logic: {fileID: 0}
@@ -906,7 +907,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 5
+  m_Constraints: 4
 --- !u!212 &1274469619
 SpriteRenderer:
   serializedVersion: 2
@@ -1395,10 +1396,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   cheese: {fileID: 8263125693452387176, guid: 9cced6fa86e63594e9f95977bd5bbe9b, type: 3}
-  heightOffset: 10
+  heightOffset: 5
   spawnRate: 2
   minY: -3
-  maxY: 3
+  maxY: 0
   spawnX: 10
 --- !u!4 &1869604455
 Transform:
