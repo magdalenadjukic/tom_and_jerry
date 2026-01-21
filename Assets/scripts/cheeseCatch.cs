@@ -8,7 +8,6 @@ public class cheeseCatch : MonoBehaviour
         logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicScript>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         

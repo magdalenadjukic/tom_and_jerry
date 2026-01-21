@@ -2,19 +2,23 @@ using UnityEngine;
 
 public class trapSpawnScript : MonoBehaviour
 {
+    public logicScript logic;
+
     public GameObject trap;
     public float spawnRate;
     private float timer = 0;
-    //public float startDelay = 3f;
+
     void Start()
     {
+        logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicScript>();
+
         spawnTrap();
         spawnRate = Random.Range(1.5f, 3f);
-       // timer = -startDelay;
     }
 
     void Update()
     {
+        if (logic.gameIsOver) return;
 
         if (timer < spawnRate)
         {
@@ -27,16 +31,7 @@ public class trapSpawnScript : MonoBehaviour
 
         }
 
-        //timer += Time.deltaTime;
-
-     
-        //if (timer >= spawnRate)
-        //{
-        //    spawnTrap();       
-        //    timer = 0f;        
-
-        //}
-
+      
     }
 
     void spawnTrap()

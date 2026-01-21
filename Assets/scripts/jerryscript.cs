@@ -5,11 +5,19 @@ public class jerryscript : MonoBehaviour
 {
     [SerializeField] private float speed;
     public Rigidbody2D myRigidBody;
-    public float jumpStrength;
+
+    public float jumpStrength = 10f;
     public logicScript logic;
     public bool jerryIsAlive = true;
-    private float horizontalInput;
-    //mis treba da poskoci samo jednom, ne vise puta- bool isGrounded
+
+    private bool isGrounded = false;
+    public LayerMask groundLayer;
+
+    public Transform feetPos;
+    public float groundDistance = 0.25f;
+    private bool isJumping = false;
+    [SerializeField] private float jumpTime = 0.3f;
+    private float jumpTimer;
 
     private void Awake()
     {
@@ -19,24 +27,44 @@ public class jerryscript : MonoBehaviour
     {
         logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicScript>();
     }
-
-    
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        if (!jerryIsAlive)
+        {
+            // zaustavi kretanje skroz kad je game over
+            myRigidBody.linearVelocity = Vector2.zero;
+            return;
+        }
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, groundDistance, groundLayer);
+        
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded)
+        {
+            
+            isJumping = true;
+            myRigidBody.linearVelocity = Vector2.up * jumpStrength;
 
-        // Ovo sluzi da mis ide levo desno
-        myRigidBody.linearVelocity = new Vector2(horizontalInput * speed, myRigidBody .linearVelocity.y);
+        }
+        if(isJumping && Input.GetButton("Jump"))
+        {
+            
+            if (jumpTimer < jumpTime)
+            {
+                myRigidBody.linearVelocity=Vector2.up*jumpStrength;
+                jumpTimer += Time.deltaTime;
+            }
+            else
+            {
+                isJumping=false;    
+            }
 
-        // Ova dva if uslova flipuju figuru levo desno u zavisnosti u kom smeru ide
-        if (horizontalInput > 0.01f)
-            transform.localScale = new Vector3(0.2751009f, 0.3365659f, 1);
-        else if (horizontalInput < -0.01f)
-            transform.localScale = new Vector3(-0.2751009f, 0.3365659f, 1);
-
-        // Da skace sa space-om
-        if (Input.GetKey(KeyCode.Space))
-            myRigidBody.linearVelocity = new Vector2(myRigidBody.linearVelocity.x, jumpStrength);
+        }
+        if (Input.GetButtonUp("Jump"))
+        {
+            
+            isJumping = false;
+            jumpTimer = 0;
+        }
+        
 
     }
 
@@ -44,11 +72,12 @@ public class jerryscript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-
         if (collision.gameObject.CompareTag("trapspawn"))
         {
             logic.gameOver();
-            jerryIsAlive = false;
+
+           jerryIsAlive = false;
+
         }
     }
 }

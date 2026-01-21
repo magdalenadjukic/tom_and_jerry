@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class trapMoveScript : MonoBehaviour
 {
-    public float moveSpeed=5;
+    public float moveSpeed=15;
     public float deadZone = -45;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public logicScript logic;
+
     void Start()
     {
-        
+        logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicScript>();
+
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (logic.gameIsOver) return;
+
         transform.position += (Vector3.left * moveSpeed)*Time.deltaTime;
         if(transform.position.x<deadZone)
         {

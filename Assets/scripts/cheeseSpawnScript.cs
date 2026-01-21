@@ -3,10 +3,10 @@ using UnityEngine.UIElements;
 
 public class cheeseSpawnScript : MonoBehaviour
 {
+    public logicScript logic;
 
     public GameObject cheese;
-    //public float spawnRate = 2;
-    //private float timer = 0;
+    
     public float heightOffset = 7;
 
     public float spawnRate = 2f;
@@ -18,12 +18,15 @@ public class cheeseSpawnScript : MonoBehaviour
     public float spawnX = 10f;
     void Start()
     {
+        logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicScript>();
+
         spawnCheese();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (logic.gameIsOver) return;
+
         if (timer < spawnRate)
         {
             timer += Time.deltaTime;
@@ -37,9 +40,7 @@ public class cheeseSpawnScript : MonoBehaviour
     }
     void spawnCheese()
     {
-        //float lowestPoint = transform.position.y - heightOffset;
-        //float highestPoint = transform.position.y + heightOffset;
-        //Instantiate(cheese, new Vector3(transform.position.x,Random.Range(lowestPoint,highestPoint),0), transform.rotation);
+        
         float spawnY = Random.Range(minY, maxY);
         Vector3 spawnPos = new Vector3(spawnX, spawnY, 0);
         Instantiate(cheese, spawnPos, Quaternion.identity);
